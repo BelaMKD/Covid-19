@@ -4,6 +4,6 @@ namespace Test
 {
     public class Class1
     {
-        public int INt { get; set; }
+        public string Test1221323 { get; set; }
     }
 }
