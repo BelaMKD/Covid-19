@@ -30,6 +30,8 @@ namespace WebApp
             services.AddRazorPages();
             services.AddDbContext<AppDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("MyConnection")));
             services.AddScoped<IHospitalService, HospitalData>();
+            services.AddScoped<IPatientService, PatientData>();
+
 
         }
 

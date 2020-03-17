@@ -12,5 +12,6 @@ namespace Data.IServices
         Hospital GetHospitalById(int id);
         Hospital CreateHospital(Hospital hospital);
         Hospital UpdateHospital(Hospital hospital);
+        Hospital DeleteHospital(int id);
     }
 }

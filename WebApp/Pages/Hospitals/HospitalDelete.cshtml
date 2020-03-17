@@ -1,0 +1,19 @@
+﻿@page "{id:int}"
+@model WebApp.Pages.Hospitals.HospitalDeleteModel
+@{
+    ViewData["Title"] = "HospitalDelete";
+}
+
+<h2>Are you sure you want to Delete Hospital @Model.Hospital.Name ?</h2>
+
+<form method="post">
+
+    <input type="hidden" asp-for="Hospital.Id" />
+
+    <div class="form-group">
+        <button class="btn btn-danger" type="submit">Yes</button>
+        <a class="btn btn-primary" asp-page="./HospitalList">No</a>
+    </div>
+
+</form>
+

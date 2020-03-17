@@ -1,5 +1,6 @@
 ﻿using Data.IServices;
 using Domain;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,9 +28,21 @@ namespace Data.DataSql
             return temp.Entity;
         }
 
+        public Hospital DeleteHospital(int id)
+        {
+            var temp = dbContext.Hospitals.SingleOrDefault(h => h.Id == id);
+            if(temp != null)
+            {
+                dbContext.Hospitals.Remove(temp);
+            }
+            return temp;
+        }
+
         public Hospital GetHospitalById(int id)
         {
-            return dbContext.Hospitals.SingleOrDefault(h => h.Id == id);
+            return dbContext.Hospitals
+                .Include(h => h.Patients)
+                .SingleOrDefault(h => h.Id == id);
         }
 
         public IEnumerable<Hospital> GetHospitals()

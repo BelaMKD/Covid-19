@@ -17,6 +17,8 @@ namespace WebApp.Pages.Hospitals
         {
             this.hospitalService = hospitalService;
         }
+        [TempData]
+        public string Message { get; set; }
         public IEnumerable<Hospital> Hospitals { get; set; }
         public void OnGet()
         {

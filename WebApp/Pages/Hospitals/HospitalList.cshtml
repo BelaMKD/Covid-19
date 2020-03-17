@@ -8,6 +8,13 @@
 
 <a class="btn btn-primary mb-2" asp-page="./HospitalEdit">Add Hospital</a>
 
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert alert-info">
+        @Model.Message
+    </div>
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -31,7 +38,7 @@
                 @item.City
             </td>
             <td>
-                <a class="btn btn-primary" asp-page="HospitalDetails">
+                <a class="btn btn-primary" asp-page="PatientsInHospital" asp-route-id="@item.Id">
                     <i class="fas fa-person-booth"></i>
                 </a>
                 <a class="btn btn-primary" asp-page="HospitalEdit" asp-route-id="@item.Id">

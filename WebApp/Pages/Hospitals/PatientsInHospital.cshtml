@@ -1,0 +1,51 @@
+﻿@page "{id:int}"
+@model WebApp.Pages.Hospitals.PatientsInHospitalModel
+@{
+    ViewData["Title"] = "PatientsInHospital";
+}
+
+<h2>Patients Checked in Hospital @Model.Hospital.Name</h2>
+
+<a class="btn btn-primary mb-2" asp-page="/Patients/AddPatient" asp-route-id="@Model.Hospital.Id">Add Patient</a>
+
+<table class="table">
+
+    <thead>
+        <tr>
+            <th>
+                Patient Name
+            </th>
+            <th>
+                Gender
+            </th>
+            <th>
+                Birth Date
+            </th>
+            <th>
+                City
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.Hospital.Patients)
+    {
+     <tr>
+         <td>
+              @item.Name
+         </td>
+         <td>
+              @item.Gender
+         </td>
+         <td>
+             @item.BirthDate.Day / @item.BirthDate.Month / @item.BirthDate.Year
+         </td>
+         <td>
+              @item.City
+         </td>
+     </tr>
+    }
+
+</table>
+
