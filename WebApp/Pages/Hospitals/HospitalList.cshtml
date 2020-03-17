@@ -1,0 +1,53 @@
+﻿@page
+@model WebApp.Pages.Hospitals.HospitalListModel
+@{
+    ViewData["Title"] = "HospitalList";
+}
+
+<h2>List of Hospitals</h2>
+
+<a class="btn btn-primary mb-2" asp-page="./HospitalEdit">Add Hospital</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Hospital
+            </th>
+            <th>
+                Location
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    @foreach(var item in Model.Hospitals)
+    {
+        <tr>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @item.City
+            </td>
+            <td>
+                <a class="btn btn-primary" asp-page="HospitalDetails">
+                    <i class="fas fa-person-booth"></i>
+                </a>
+                <a class="btn btn-primary" asp-page="HospitalEdit" asp-route-id="@item.Id">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a class="btn btn-danger" asp-page="HospitalDelete" asp-route-id="@item.Id">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </td>
+        </tr>
+    }
+
+</table>
+@if(Model.Hospitals.Count() == 0)
+{
+    <div class="alert">
+        No Hospitals Added
+    </div>
+}
