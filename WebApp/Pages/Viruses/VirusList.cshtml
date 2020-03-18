@@ -1,0 +1,32 @@
+﻿@page
+@model WebApp.VirusListModel
+@{
+    ViewData["Title"] = "VirusList";
+}
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Symptoms</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var virus in Model.Viruses)
+            {
+                <tr>
+                    <td>@virus.Name</td>
+                    <td>@virus.VirusDescription</td>
+                    @foreach (var syndrom in virus.Symptoms)
+                    {
+                        <td>@(syndrom. + ", ")</td>
+                    }
+                    <td><a class="btn btn-primary" asp-page="./VirusEdit">Edit</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+<a class="btn btn-primary" asp-page="./VirusEdit">Add Virus</a>

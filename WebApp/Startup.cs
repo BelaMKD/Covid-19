@@ -28,10 +28,9 @@ namespace WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddMvc().AddRazorRuntimeCompilation();
             services.AddDbContext<AppDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("MyConnection")));
             services.AddScoped<IHospitalService, HospitalData>();
-            services.AddScoped<IPatientService, PatientData>();
-
 
         }
 
