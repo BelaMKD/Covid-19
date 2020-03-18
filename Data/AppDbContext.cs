@@ -11,6 +11,7 @@ namespace Data
         public DbSet<Hospital> Hospitals { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Virus> Viruses { get; set; }
+        public DbSet<Symptom> Symptoms { get; set; }
         public DbSet<Diagnosis> Diagnoses { get; set; }
         public DbSet<PatientVirus> PatientViruses { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) :base(options)

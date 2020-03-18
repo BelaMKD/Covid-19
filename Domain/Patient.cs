@@ -15,8 +15,6 @@ namespace Domain
         public Gender Gender { get; set; }
         public DateTime BirthDate { get; set; }
         public string City { get; set; }
-        public bool NotRecovered { get; set; }
-
         public Hospital Hospital { get; set; }
         public int HospitalId { get; set; }
 

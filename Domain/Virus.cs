@@ -9,14 +9,13 @@ namespace Domain
     {
         public Virus()
         {
-            Symptoms = new List<Symptoms>();
+            Symptoms = new List<Symptom>();
             PatientViruses = new List<PatientVirus>();
         }
         public int Id { get; set; }
         public string Name { get; set; }
         public string VirusDescription { get; set; }
-        [NotMapped]
-        public List<Symptoms> Symptoms { get; set; }
+        public List<Symptom> Symptoms { get; set; }
 
         public List<PatientVirus> PatientViruses { get; set; }
     }

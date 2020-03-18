@@ -13,15 +13,11 @@ namespace WebApp
     public class VirusEditModel : PageModel
     {
         private readonly IVirusService virusService;
-        private readonly IHtmlHelper htmlHelper;
         [BindProperty]
         public Virus Virus { get; set; }
-        [BindProperty]
-        public List<SelectListItem> Symptomss { get; set; }
-        public VirusEditModel(IVirusService virusService, IHtmlHelper htmlHelper)
+        public VirusEditModel(IVirusService virusService)
         {
             this.virusService = virusService;
-            this.htmlHelper = htmlHelper;
         }
         public IActionResult OnGet(int? id)
         {
@@ -37,33 +33,11 @@ namespace WebApp
             {
                 Virus = new Virus();
             }
-            Symptomss = htmlHelper.GetEnumSelectList<Symptoms>().ToList();
            
             return Page();
         }
         public IActionResult OnPost()
         {
-            if (ModelState.IsValid)
-            {
-                foreach (var symptom in Symptomss)
-                {
-                    if (symptom.Selected)
-                    {
-                        Virus.Symptoms.Add((Symptoms)Enum.Parse(typeof(Symptoms), symptom.Text));
-                    }
-                }
-                if (Virus.Id==0)
-                {
-                    virusService.CreateVirus(Virus);
-                }
-                else
-                {
-                    virusService.UpdateVirus(Virus);
-                }
-                virusService.Commit();
-                return RedirectToPage("./VirusList");
-            }
-            Symptomss = htmlHelper.GetEnumSelectList<Symptoms>().ToList();
             return Page();
         }
     }
