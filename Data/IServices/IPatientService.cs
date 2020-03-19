@@ -9,5 +9,8 @@ namespace Data.IServices
     {
         int Commit();
         Patient CreatePatient(Patient patient);
+        Patient GetPatientById(int id);
+        Patient EditPatient(Patient patient);
+        Patient DeletePatient(int id);
     }
 }

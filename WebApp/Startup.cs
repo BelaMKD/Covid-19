@@ -31,6 +31,7 @@ namespace WebApp
             services.AddMvc().AddRazorRuntimeCompilation();
             services.AddDbContext<AppDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("MyConnection")));
             services.AddScoped<IHospitalService, HospitalData>();
+            services.AddScoped<IPatientService, PatientData>();
             services.AddScoped<IVirusService, VirusData>();
             services.AddScoped<ISymptomService, SymptomData>();
 

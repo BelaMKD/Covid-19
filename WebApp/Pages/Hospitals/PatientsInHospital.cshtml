@@ -44,6 +44,17 @@
          <td>
               @item.City
          </td>
+         <td>
+             <a class="btn btn-primary">Diagnosis</a>
+             <a class="btn btn-primary" asp-page="/Patients/EditPatient" asp-route-id="@item.Id">
+                 <i class="fas fa-edit"></i>
+             </a>
+             <form asp-page-handler="Delete" asp-route-id="@item.Id" method="post" class="d-inline">
+                 <button type="submit" onclick="return confirm('Do you really want to delete this Patient? ');" class="btn btn-danger d-inline-block">
+                     <i class="fas fa-trash"></i>
+                 </button>
+             </form>
+         </td>
      </tr>
     }
 

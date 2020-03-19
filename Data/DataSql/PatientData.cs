@@ -2,6 +2,7 @@
 using Domain;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Data.DataSql
@@ -24,6 +25,27 @@ namespace Data.DataSql
         {
             var temp = dbContext.Patients.Add(patient);
             return temp.Entity;
+        }
+
+        public Patient DeletePatient(int id)
+        {
+            var temp = dbContext.Patients.SingleOrDefault(p => p.Id == id);
+            if(temp != null)
+            {
+                dbContext.Patients.Remove(temp);
+            }
+            return temp;
+        }
+
+        public Patient EditPatient(Patient patient)
+        {
+            dbContext.Entry(patient).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            return patient;
+        }
+
+        public Patient GetPatientById(int id)
+        {
+            return dbContext.Patients.SingleOrDefault(p => p.Id == id);
         }
     }
 }
