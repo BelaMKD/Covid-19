@@ -47,7 +47,7 @@ namespace WebApp.Pages.Patients
                 patientService.Commit();
                 TempData["Message"] = "Patient Added in Hospital!";
 
-                return RedirectToPage("/Hospitals/HospitalList");
+                return RedirectToPage("/Hospitals/PatientsInHospital", new { id = Hospital.Id });
             }
 
             return Page();
