@@ -23,8 +23,7 @@ namespace Data.DataSql
 
         public IEnumerable<Symptom> GetSymptoms()
         {
-            return dbContext.Symptoms
-                .ToList();
+            return dbContext.Symptoms.ToList();
         }
     }
 }

@@ -115,7 +115,7 @@ namespace Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool?>("IsSelected")
+                    b.Property<bool>("IsSelected")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
@@ -128,7 +128,7 @@ namespace Data.Migrations
 
                     b.HasIndex("VirusId");
 
-                    b.ToTable("Symptom");
+                    b.ToTable("Symptoms");
                 });
 
             modelBuilder.Entity("Domain.Virus", b =>

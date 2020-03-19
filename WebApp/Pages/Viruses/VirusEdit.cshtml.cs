@@ -13,11 +13,16 @@ namespace WebApp
     public class VirusEditModel : PageModel
     {
         private readonly IVirusService virusService;
+        private readonly ISymptomService symptomService;
+
         [BindProperty]
         public Virus Virus { get; set; }
-        public VirusEditModel(IVirusService virusService)
+        [BindProperty]
+        public IEnumerable<Symptom> Symptoms { get; set; }
+        public VirusEditModel(IVirusService virusService, ISymptomService symptomService)
         {
             this.virusService = virusService;
+            this.symptomService = symptomService;
         }
         public IActionResult OnGet(int? id)
         {
@@ -33,11 +38,12 @@ namespace WebApp
             {
                 Virus = new Virus();
             }
-           
+            Symptoms = symptomService.GetSymptoms();
             return Page();
-        }
+        } 
         public IActionResult OnPost()
         {
+            Symptoms = Symptoms;
             return Page();
         }
     }

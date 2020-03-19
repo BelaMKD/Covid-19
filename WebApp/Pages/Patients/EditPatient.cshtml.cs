@@ -48,7 +48,7 @@ namespace WebApp.Pages.Patients
 
                 Hospital = hospitalService.GetHospitalById(Patient.HospitalId);
 
-                return RedirectToPage("/Hospitals/HospitalList");
+                return RedirectToPage("/Hospitals/PatientsInHospital", new { id = Hospital.Id });
             }
 
             SelectGender = htmlHelper.GetEnumSelectList<Gender>();

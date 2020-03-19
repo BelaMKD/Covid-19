@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200318204740_AddSymptoms")]
-    partial class AddSymptoms
+    [Migration("20200318212819_Start")]
+    partial class Start
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -130,7 +130,7 @@ namespace Data.Migrations
 
                     b.HasIndex("VirusId");
 
-                    b.ToTable("Symptom");
+                    b.ToTable("Symptoms");
                 });
 
             modelBuilder.Entity("Domain.Virus", b =>
