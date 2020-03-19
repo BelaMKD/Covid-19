@@ -45,7 +45,7 @@
               @item.City
          </td>
          <td>
-             <a class="btn btn-primary">Diagnosis</a>
+             <a class="btn btn-primary" asp-route-id="@item.Id" asp-page="/Diagnosis/DiagnosisList">See All Diagnosis</a>
              <a class="btn btn-primary" asp-page="/Patients/EditPatient" asp-route-id="@item.Id">
                  <i class="fas fa-edit"></i>
              </a>

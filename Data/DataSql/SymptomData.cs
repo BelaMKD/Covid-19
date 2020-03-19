@@ -21,7 +21,7 @@ namespace Data.DataSql
                 .SingleOrDefault(x => x.Id == id);
         }
 
-        public IEnumerable<Symptom> GetSymptoms()
+        public List<Symptom> GetSymptoms()
         {
             return dbContext.Symptoms.ToList();
         }

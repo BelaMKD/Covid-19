@@ -18,7 +18,7 @@ namespace WebApp
         [BindProperty]
         public Virus Virus { get; set; }
         [BindProperty]
-        public IEnumerable<Symptom> Symptoms { get; set; }
+        public List<Symptom> Symptoms { get; set; }
         public VirusEditModel(IVirusService virusService, ISymptomService symptomService)
         {
             this.virusService = virusService;
@@ -29,7 +29,13 @@ namespace WebApp
             if (id.HasValue)
             {
                 Virus = virusService.GetVirusById(id.Value);
-                if (Virus == null)
+                if (Virus.Symptoms != null)
+                {
+                    Virus.Symptoms.Clear();
+                    virusService.Commit();
+                }
+
+                    if (Virus == null)
                 {
                     return RedirectToPage("./List");
                 }
@@ -39,11 +45,37 @@ namespace WebApp
                 Virus = new Virus();
             }
             Symptoms = symptomService.GetSymptoms();
+
             return Page();
         } 
         public IActionResult OnPost()
         {
-            Symptoms = Symptoms;
+            if (ModelState.IsValid)
+            {
+             
+                foreach (var symptom in Symptoms)
+                {
+                    if (symptom.IsSelected)
+                    {
+                        Virus.Symptoms.Add(symptomService.GetSymptomById(symptom.Id));
+                    }
+                    else
+                    {
+                        Virus.Symptoms.Remove(symptomService.GetSymptomById(symptom.Id));
+                    }
+                }
+                if (Virus.Id == 0)
+                {
+                    virusService.CreateVirus(Virus);
+                }
+                else
+                {
+                    virusService.UpdateVirus(Virus);
+                }
+                virusService.Commit();
+                return RedirectToPage("./VirusList");
+            }
+            Symptoms = symptomService.GetSymptoms();
             return Page();
         }
     }

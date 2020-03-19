@@ -10,7 +10,7 @@ namespace Data.IServices
         Virus GetVirusById(int id);
         Virus CreateVirus(Virus virus);
         Virus UpdateVirus(Virus virus);
-        IEnumerable<Virus> GetViruses();
+        List<Virus> GetViruses();
         int Commit();
     }
 }

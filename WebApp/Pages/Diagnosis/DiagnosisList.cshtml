@@ -1,0 +1,44 @@
+﻿@page
+@model WebApp.DiagnosisListModel
+@{
+    ViewData["Title"] = "DiagnosisList";
+}
+
+<h2>Diagnosis for @Model.Patient.Name</h2>
+<a class="btn btn-success" asp-page="./DiagnosisEdit" asp-route-patientId="@Model.Patient.Id">Add diagnose</a>
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Date Of Test</th>
+            <th scope="col">Viruses</th>
+            <th scope="col">Recovered</th>
+            <th scope="col">Date Recovered</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var diagnose in Model.Patient.Diagnosis)
+        {
+            <tr>
+                <td>@diagnose.DateOfTest</td>
+                <td>
+                    @foreach (var virus in diagnose.Viruses)
+                    {
+                        @(virus.Name + " ")
+                    }
+                </td>
+                <td>@diagnose.Recovered</td>
+                <td style="visibility:@(diagnose.Recovered? "visible" : "hidden")">@diagnose.DateRecover</td>
+                <td><a class="btn btn-primary" asp-page="./DiagnosisEdit" asp-route-id="@diagnose.Id" asp-route-patientId="@Model.Patient.Id">Edit</a></td>
+            </tr>
+        }
+    </tbody>
+    <tfoot style="visibility:@(Model.Patient.Diagnosis.Count()==0? "visible":"hidden")">
+        <tr>
+            <td colspan="4">There are no diagnosis for this patient</td>
+        </tr>
+    </tfoot>
+</table>
+
+

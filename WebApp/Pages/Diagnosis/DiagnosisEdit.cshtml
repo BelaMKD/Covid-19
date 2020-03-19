@@ -1,0 +1,47 @@
+﻿@page
+@model WebApp.DiagnosisEditModel
+@{
+    ViewData["Title"] = "DiagnosisEdit";
+
+}
+
+<h2 style="margin-bottom:10%;">Diagnose for patient: @Model.Diagnosis.Patient.Name</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Diagnosis.Id" />
+    <input type="hidden" asp-for="Diagnosis.Patient.Id" />
+
+
+    <h3>Does he have a virus?</h3>
+    @for (int i = 0; i < Model.Viruses.Count(); i++)
+    {
+        <div class="form-check" style="margin-bottom:20px;">
+            <input type="hidden" asp-for="Viruses[i].Id" />
+            <input class="form-check-input" type="checkbox" asp-for="Viruses[i].IsSelected">
+            <label class="form-check-label">@Model.Viruses[i].Name</label>
+        </div>
+    }
+    <h3>Dali ke se izlekuva?</h3>
+    <div class="form-check" style="margin-bottom:5%">
+        <input id="check" checked type="checkbox" class="form-check-input" asp-for="Diagnosis.Recovered" />
+    </div>
+
+    <div class="form-group date">
+        <label asp-for="Diagnosis.DateRecover"></label>
+        <input class="form-control" asp-for="Diagnosis.DateRecover">
+    </div>
+
+
+    <div class="form-group" style="margin-top:50px;">
+        <button class="btn btn-primary" type="submit">Save</button>
+        <a class="btn btn-primary" asp-page="./HospitalList">Back</a>
+    </div>
+</form>
+
+@section Scripts{ 
+<script>
+    $('#check').click(function() {
+      $('.date')[this.checked ? "show" : "hide"]();
+    });
+</script>
+}
