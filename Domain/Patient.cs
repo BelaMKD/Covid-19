@@ -9,7 +9,7 @@ namespace Domain
     {
         public Patient()
         {
-            PatientViruses = new List<PatientVirus>();
+            Diagnosis = new List<Diagnosis>();
         }
         public int Id { get; set; }
         public string Name { get; set; }
@@ -22,9 +22,8 @@ namespace Domain
         public Hospital Hospital { get; set; }
         public int HospitalId { get; set; }
 
-        public List<PatientVirus> PatientViruses { get; set; }
 
-        public Diagnosis Diagnosis { get; set; }
+        public List<Diagnosis> Diagnosis { get; set; }
 
     }
 }

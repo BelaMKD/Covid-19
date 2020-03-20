@@ -8,7 +8,6 @@ namespace Data.IServices
     public interface ISymptomService
     {
         Symptom GetSymptomById(int id);
-        IEnumerable<Symptom> GetSymptoms();
-
+        List<Symptom> GetSymptoms();
     }
 }

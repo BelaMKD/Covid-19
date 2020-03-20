@@ -40,8 +40,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PatientId")
-                        .IsUnique();
+                    b.HasIndex("PatientId");
 
                     b.ToTable("Diagnoses");
                 });
@@ -93,21 +92,6 @@ namespace Data.Migrations
                     b.ToTable("Patients");
                 });
 
-            modelBuilder.Entity("Domain.PatientVirus", b =>
-                {
-                    b.Property<int>("PatientId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VirusId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PatientId", "VirusId");
-
-                    b.HasIndex("VirusId");
-
-                    b.ToTable("PatientViruses");
-                });
-
             modelBuilder.Entity("Domain.Symptom", b =>
                 {
                     b.Property<int>("Id")
@@ -115,7 +99,7 @@ namespace Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool?>("IsSelected")
+                    b.Property<bool>("IsSelected")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
@@ -128,7 +112,7 @@ namespace Data.Migrations
 
                     b.HasIndex("VirusId");
 
-                    b.ToTable("Symptom");
+                    b.ToTable("Symptoms");
                 });
 
             modelBuilder.Entity("Domain.Virus", b =>
@@ -138,6 +122,12 @@ namespace Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("DiagnosisId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsSelected")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -146,14 +136,16 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DiagnosisId");
+
                     b.ToTable("Viruses");
                 });
 
             modelBuilder.Entity("Domain.Diagnosis", b =>
                 {
                     b.HasOne("Domain.Patient", "Patient")
-                        .WithOne("Diagnosis")
-                        .HasForeignKey("Domain.Diagnosis", "PatientId")
+                        .WithMany("Diagnosis")
+                        .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -167,26 +159,18 @@ namespace Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.PatientVirus", b =>
-                {
-                    b.HasOne("Domain.Patient", "Patient")
-                        .WithMany("PatientViruses")
-                        .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Virus", "Virus")
-                        .WithMany("PatientViruses")
-                        .HasForeignKey("VirusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Domain.Symptom", b =>
                 {
                     b.HasOne("Domain.Virus", null)
                         .WithMany("Symptoms")
                         .HasForeignKey("VirusId");
+                });
+
+            modelBuilder.Entity("Domain.Virus", b =>
+                {
+                    b.HasOne("Domain.Diagnosis", "Diagnosis")
+                        .WithMany("Viruses")
+                        .HasForeignKey("DiagnosisId");
                 });
 #pragma warning restore 612, 618
         }

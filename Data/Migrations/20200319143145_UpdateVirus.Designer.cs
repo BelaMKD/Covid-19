@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200317124552_Initial")]
-    partial class Initial
+    [Migration("20200319143145_UpdateVirus")]
+    partial class UpdateVirus
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,8 +42,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PatientId")
-                        .IsUnique();
+                    b.HasIndex("PatientId");
 
                     b.ToTable("Diagnoses");
                 });
@@ -88,9 +87,6 @@ namespace Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("NotRecovered")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.HasIndex("HospitalId");
@@ -98,19 +94,27 @@ namespace Data.Migrations
                     b.ToTable("Patients");
                 });
 
-            modelBuilder.Entity("Domain.PatientVirus", b =>
+            modelBuilder.Entity("Domain.Symptom", b =>
                 {
-                    b.Property<int>("PatientId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsSelected")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("VirusId")
                         .HasColumnType("int");
 
-                    b.Property<int>("VirusId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PatientId", "VirusId");
+                    b.HasKey("Id");
 
                     b.HasIndex("VirusId");
 
-                    b.ToTable("PatientViruses");
+                    b.ToTable("Symptoms");
                 });
 
             modelBuilder.Entity("Domain.Virus", b =>
@@ -120,6 +124,12 @@ namespace Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("DiagnosisId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsSelected")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -128,14 +138,16 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DiagnosisId");
+
                     b.ToTable("Viruses");
                 });
 
             modelBuilder.Entity("Domain.Diagnosis", b =>
                 {
                     b.HasOne("Domain.Patient", "Patient")
-                        .WithOne("Diagnosis")
-                        .HasForeignKey("Domain.Diagnosis", "PatientId")
+                        .WithMany("Diagnosis")
+                        .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -149,19 +161,18 @@ namespace Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.PatientVirus", b =>
+            modelBuilder.Entity("Domain.Symptom", b =>
                 {
-                    b.HasOne("Domain.Patient", "Patient")
-                        .WithMany("PatientViruses")
-                        .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Domain.Virus", null)
+                        .WithMany("Symptoms")
+                        .HasForeignKey("VirusId");
+                });
 
-                    b.HasOne("Domain.Virus", "Virus")
-                        .WithMany("PatientViruses")
-                        .HasForeignKey("VirusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            modelBuilder.Entity("Domain.Virus", b =>
+                {
+                    b.HasOne("Domain.Diagnosis", "Diagnosis")
+                        .WithMany("Viruses")
+                        .HasForeignKey("DiagnosisId");
                 });
 #pragma warning restore 612, 618
         }

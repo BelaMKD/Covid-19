@@ -34,7 +34,7 @@ namespace WebApp
             services.AddScoped<IPatientService, PatientData>();
             services.AddScoped<IVirusService, VirusData>();
             services.AddScoped<ISymptomService, SymptomData>();
-
+            services.AddScoped<IDiagnosisService, DiagnosisData>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

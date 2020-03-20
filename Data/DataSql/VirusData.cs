@@ -29,12 +29,15 @@ namespace Data.DataSql
 
         public Virus GetVirusById(int id)
         {
-            return dbContext.Viruses.SingleOrDefault(x => x.Id == id);
+            return dbContext.Viruses
+                .Include(x=>x.Symptoms)
+                .SingleOrDefault(x => x.Id == id);
         }
 
-        public IEnumerable<Virus> GetViruses()
+        public List<Virus> GetViruses()
         {
             return dbContext.Viruses
+                .Include(x=>x.Symptoms)
                 .ToList();
         }
 
