@@ -1,16 +1,21 @@
-﻿@page
+﻿@page 
 @model WebApp.DiagnosisEditModel
 @{
     ViewData["Title"] = "DiagnosisEdit";
 
 }
 
-<h2 style="margin-bottom:10%;">Diagnose for patient: @Model.Diagnosis.Patient.Name</h2>
+<h2 class="mb-3">Diagnose for patient: @Model.Patient.Name</h2>
 
 <form method="post">
-    <input type="hidden" asp-for="Diagnosis.Id" />
-    <input type="hidden" asp-for="Diagnosis.Patient.Id" />
 
+    <input type="hidden" asp-for="Diagnosis.Id" />
+    <input type="hidden" asp-for="Patient.Id" />
+
+    <div class="form-group">
+        <label asp-for="Diagnosis.DateOfTest"></label>
+        <input class="form-control" asp-for="Diagnosis.DateOfTest" />
+    </div>
 
     <h3>Does he have a virus?</h3>
     @for (int i = 0; i < Model.Viruses.Count(); i++)
@@ -21,7 +26,7 @@
             <label class="form-check-label">@Model.Viruses[i].Name</label>
         </div>
     }
-    <h3>Dali ke se izlekuva?</h3>
+    <h3>Will the patient Recover and Recovery Date?</h3>
     <div class="form-check" style="margin-bottom:5%">
         <input id="check" checked type="checkbox" class="form-check-input" asp-for="Diagnosis.Recovered" />
     </div>
@@ -34,7 +39,7 @@
 
     <div class="form-group" style="margin-top:50px;">
         <button class="btn btn-primary" type="submit">Save</button>
-        <a class="btn btn-primary" asp-page="./HospitalList">Back</a>
+        <a class="btn btn-primary" asp-page="./DiagnosisList" asp-route-id="@Model.Patient.Id">Back</a>
     </div>
 </form>
 

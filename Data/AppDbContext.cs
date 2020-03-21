@@ -13,9 +13,15 @@ namespace Data
         public DbSet<Virus> Viruses { get; set; }
         public DbSet<Symptom> Symptoms { get; set; }
         public DbSet<Diagnosis> Diagnoses { get; set; }
+        public DbSet<DiagnosisVirus> DiagnosisViruses { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) :base(options)
         {
 
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<DiagnosisVirus>().HasKey(dv => new { dv.DiagnosisId, dv.VirusId });
+            base.OnModelCreating(modelBuilder);
         }
 
     }
