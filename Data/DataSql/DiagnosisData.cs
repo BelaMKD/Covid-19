@@ -24,8 +24,18 @@ namespace Data.DataSql
 
         public Diagnosis CreateDiagnosis(Diagnosis diagnosis)
         {
-            dbContext.Diagnoses.Add(diagnosis);
-            return diagnosis;
+            var temp = dbContext.Diagnoses.Add(diagnosis);
+            return temp.Entity;
+        }
+
+        public Diagnosis DeleteDiagnosis(int id)
+        {
+            var temp = dbContext.Diagnoses.SingleOrDefault(d => d.Id == id);
+            if(temp != null)
+            {
+                dbContext.Diagnoses.Remove(temp);
+            }
+            return temp;
         }
 
         public IEnumerable<Diagnosis> GetDiagnoses()
@@ -37,12 +47,14 @@ namespace Data.DataSql
         public Diagnosis GetDiagnosisById(int id)
         {
             return dbContext.Diagnoses
+                .Include(d => d.Patient)
+                .Include(d => d.DiagnosisViruses)
                 .SingleOrDefault(x => x.Id == id);
         }
 
         public Diagnosis UpdateDiagnosis(Diagnosis diagnosis)
         {
-            dbContext.Entry(diagnosis).State = EntityState.Modified;
+            dbContext.Diagnoses.Update(diagnosis);
             return diagnosis;
         }
     }

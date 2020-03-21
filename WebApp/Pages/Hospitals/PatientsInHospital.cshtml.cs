@@ -39,8 +39,9 @@ namespace WebApp.Pages.Hospitals
                 return NotFound();
             }
             patientService.Commit();
-
-            return RedirectToPage("/Hospitals/HospitalList");
+            Hospital = hospitalService.GetHospitalById(patient.HospitalId);
+            
+            return RedirectToPage("/Hospitals/PatientsInHospital", new { id = Hospital.Id });
 
         }
     }

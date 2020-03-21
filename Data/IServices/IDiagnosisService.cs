@@ -12,5 +12,6 @@ namespace Data.IServices
         Diagnosis GetDiagnosisById(int id);
         IEnumerable<Diagnosis> GetDiagnoses();
         int Commit();
+        Diagnosis DeleteDiagnosis(int id);
     }
 }
