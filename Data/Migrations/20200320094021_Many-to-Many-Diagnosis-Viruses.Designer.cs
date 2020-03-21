@@ -4,14 +4,16 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200320094021_Many-to-Many-Diagnosis-Viruses")]
+    partial class ManytoManyDiagnosisViruses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,7 +59,7 @@ namespace Data.Migrations
 
                     b.HasIndex("VirusId");
 
-                    b.ToTable("DiagnosisViruses");
+                    b.ToTable("DiagnosisVirus");
                 });
 
             modelBuilder.Entity("Domain.Hospital", b =>

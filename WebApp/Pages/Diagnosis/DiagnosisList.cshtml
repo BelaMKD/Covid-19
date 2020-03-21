@@ -5,7 +5,7 @@
 }
 
 <h2>Diagnosis for @Model.Patient.Name</h2>
-<a class="btn btn-success" asp-page="./DiagnosisEdit" asp-route-patientId="@Model.Patient.Id">Add diagnose</a>
+<a class="btn btn-success mb-2" asp-page="./DiagnosisEdit" asp-route-patientId="@Model.Patient.Id">Add diagnose</a>
 
 <table class="table">
     <thead class="thead-dark">
@@ -20,18 +20,26 @@
     <tbody>
         @foreach (var diagnose in Model.Patient.Diagnosis)
         {
-            <tr>
-                <td>@diagnose.DateOfTest</td>
-                <td>
-                    @foreach (var virus in diagnose.Viruses)
-                    {
-                        @(virus.Name + " ")
-                    }
-                </td>
-                <td>@diagnose.Recovered</td>
-                <td style="visibility:@(diagnose.Recovered? "visible" : "hidden")">@diagnose.DateRecover</td>
-                <td><a class="btn btn-primary" asp-page="./DiagnosisEdit" asp-route-id="@diagnose.Id" asp-route-patientId="@Model.Patient.Id">Edit</a></td>
-            </tr>
+        <tr>
+            <td>@diagnose.DateOfTest</td>
+            <td>
+                @foreach (var virus in diagnose.DiagnosisViruses)
+                {
+                    @(virus.Virus.Name + " ")
+                }
+            </td>
+            <td>@diagnose.Recovered</td>
+            <td style="visibility:@(diagnose.Recovered? "visible" : "hidden")">@diagnose.DateRecover</td>
+            <td>
+                <a class="btn btn-primary" asp-page="./DiagnosisEdit" asp-route-id="@diagnose.Id" asp-route-patientId="@Model.Patient.Id">Edit
+                </a>
+                <form asp-page-handler="DeleteDiagnosis" asp-route-id="@diagnose.Id" method="post" class="d-inline">
+                    <button type="submit" onclick="return confirm('Delete Diagnosis ?');" class="btn btn-danger d-inline-block">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </form>
+            </td>
+        </tr>
         }
     </tbody>
     <tfoot style="visibility:@(Model.Patient.Diagnosis.Count()==0? "visible":"hidden")">
@@ -40,5 +48,10 @@
         </tr>
     </tfoot>
 </table>
+
+
+<a class="btn btn-primary" asp-page="/Hospitals/PatientsInHospital" asp-route-id="@Model.Patient.HospitalId">
+    Back
+</a>
 
 
