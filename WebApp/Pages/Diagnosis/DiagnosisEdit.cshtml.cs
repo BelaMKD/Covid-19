@@ -57,6 +57,16 @@ namespace WebApp
         {
             if (ModelState.IsValid)
             {
+
+                foreach (var virus in Viruses)
+                {
+                    if (virus.IsSelected == true)
+                    {
+                        var diagnosisVirus = new DiagnosisVirus();
+                        diagnosisVirus.Virus = virusService.GetVirusById(virus.Id);
+                        Diagnosis.DiagnosisViruses.Add(diagnosisVirus);
+                    }
+                }
                 if (Diagnosis.Id == 0)
                 {
                     Diagnosis.PatientId = Patient.Id;
@@ -64,22 +74,11 @@ namespace WebApp
                 }
                 else
                 {
-                    Diagnosis.PatientId = Patient.Id;
-                    Diagnosis = diagnosisService.UpdateDiagnosis(Diagnosis);
+                    Patient = patientService.GetPatientById(Patient.Id);
+                    var diagnose = diagnosisService.GetDiagnosisById(Diagnosis.Id);
+                    Patient.Diagnosis.Remove(diagnose);
+                    Patient.Diagnosis.Add(Diagnosis);
                 }
-                foreach (var virus in Viruses)
-                {
-                    if (virus.IsSelected == true)
-                    {
-                        var diagnosisVirus = new DiagnosisVirus();
-                        diagnosisVirus.DiagnosisId = Diagnosis.Id;
-                        diagnosisVirus.VirusId = virus.Id;
-                        diagnosesVirusesService.AddToBase(diagnosisVirus);
-                        Diagnosis.DiagnosisViruses.Add(diagnosisVirus);
-                    }
-                }
-                Patient.Diagnosis.Add(Diagnosis);
-
                 diagnosisService.Commit();
                 return RedirectToPage("./DiagnosisList", new { id = Diagnosis.PatientId });
             }

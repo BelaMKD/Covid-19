@@ -32,7 +32,7 @@ namespace Data.DataSql
         {
             var temp = dbContext.Patients
                 .Include(x=>x.Diagnosis)
-                .ThenInclude(w=>w.Viruses)
+                //.ThenInclude(w=>w.Viruses)
                 .SingleOrDefault(p => p.Id == id);
             if(temp != null)
             {
