@@ -31,8 +31,8 @@ namespace Data.DataSql
         public Patient DeletePatient(int id)
         {
             var temp = dbContext.Patients
-                .Include(x=>x.Diagnosis)
-                .ThenInclude(w=>w.Viruses)
+                //.Include(x=>x.Diagnosis)
+                //.ThenInclude(w=>w.Viruses)
                 .SingleOrDefault(p => p.Id == id);
             if(temp != null)
             {
