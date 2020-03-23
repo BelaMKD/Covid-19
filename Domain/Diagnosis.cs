@@ -24,5 +24,6 @@ namespace Domain
         public DateTime? DateRecover { get; set; }
         public bool Recovered { get; set; }
         public List<DiagnosisVirus> DiagnosisViruses { get; set; }
+        public bool IsPositive { get; set; }
     }
 }

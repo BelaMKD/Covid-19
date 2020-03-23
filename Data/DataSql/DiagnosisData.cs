@@ -57,5 +57,14 @@ namespace Data.DataSql
             dbContext.Diagnoses.Update(diagnosis);
             return diagnosis;
         }
+        public IEnumerable<Diagnosis> GetDiagnosesWithCorona()
+        {
+            return dbContext.Diagnoses
+                .Where(x => x.IsPositive == true)
+                .Include(x => x.Patient)
+                .Include(x => x.DiagnosisViruses)
+                .ThenInclude(z => z.Virus)
+                .ToList();
+        }
     }
 }

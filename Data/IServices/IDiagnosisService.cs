@@ -13,5 +13,6 @@ namespace Data.IServices
         IEnumerable<Diagnosis> GetDiagnoses();
         int Commit();
         Diagnosis DeleteDiagnosis(int id);
+        IEnumerable<Diagnosis> GetDiagnosesWithCorona();
     }
 }

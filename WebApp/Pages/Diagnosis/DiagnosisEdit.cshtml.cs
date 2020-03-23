@@ -62,6 +62,10 @@ namespace WebApp
                 {
                     if (virus.IsSelected == true)
                     {
+                        if (virus.Name == "Covid-19")
+                        {
+                            Diagnosis.IsPositive = true;
+                        }
                         var diagnosisVirus = new DiagnosisVirus();
                         diagnosisVirus.Virus = virusService.GetVirusById(virus.Id);
                         Diagnosis.DiagnosisViruses.Add(diagnosisVirus);
