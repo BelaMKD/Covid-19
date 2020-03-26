@@ -3,6 +3,8 @@
 @{
     var XLabels = Newtonsoft.Json.JsonConvert.SerializeObject(Model.RegionPatients.Select(x => x.Region).ToList());
     var YValues = Newtonsoft.Json.JsonConvert.SerializeObject(Model.RegionPatients.Select(x => x.PatientNumber).ToList());
+    var XLabelsDeath = Newtonsoft.Json.JsonConvert.SerializeObject(Model.PatientDeath.Select(x => x.Region).ToList());
+    var YValuesDeath = Newtonsoft.Json.JsonConvert.SerializeObject(Model.PatientDeath.Select(x => x.PatientNumber).ToList());
 
     ViewData["Title"] = "Statistic";
 }
@@ -12,33 +14,65 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 }
 
-<h2>Patients per Cities</h2>
-
-<ul class="list-inline justify-content-between">
-    <li class="list-inline-item">
-        <a asp-page="./Statistic">Per Cities</a>
-    </li>
-    <li class="list-inline-item">
-        <a asp-page="./MaleFemale">Male:Female</a>
-    </li>
-    <li class="list-inline-item">
-        <a asp-page="./InHospital">In Hospital</a>
-    </li>
-    <li class="list-inline-item">
-        <a asp-page="./GroupByAge">By Age</a>
-    </li>
-    <li class="list-inline-item">
-        <a asp-page="./RecoveryRate">Recovery Rate</a>
-    </li>
-</ul>
-
-
-<div class="box-body">
-
-    <div class="chart-container">
-        <canvas id="chart" style="width:100%; height:500px"></canvas>
+<div class="row justify-content-around">
+    <div class="card text-white bg-primary mb-3" style="min-width: 12rem; text-align:center">
+        <div class="card-header" style="font-size:2rem">Cases</div>
+        <div class="card-body">
+            <h5 class="card-title" style="font-size:5rem">@Model.Diagnoses.Count()</h5>
+        </div>
+    </div>
+    <div class="card text-white bg-success mb-3" style="min-width: 12rem; text-align:center">
+        <div class="card-header" style="font-size:2rem">Recovered</div>
+        <div class="card-body">
+            <h5 class="card-title" style="font-size:5rem">@Model.Recovered.Count()</h5>
+        </div>
+    </div>
+    <div class="card text-white bg-danger mb-3" style="min-width: 12rem; text-align:center">
+        <div class="card-header" style="font-size:2rem">Deaths</div>
+        <div class="card-body">
+            <h5 class="card-title" style="font-size:5rem">@Model.Deaths.Count()</h5>
+        </div>
     </div>
 </div>
+
+<div class="card text-center">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">Per Cities</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="./MaleFemale">Male:Female</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="./InHospital">In Hospital</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="./GroupByAge">By Age</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="./RecoveryRate">Recovery Rate</a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="box-body col-sm-6">
+                <div style="width:100%; height:50px; background-color:aqua; border:2px solid #16B4F3; border-radius:10px"><h2>Cases</h2></div>
+                <div class="chart-container">
+                    <canvas id="chart" style="width:100%; height:430px"></canvas>
+                </div>
+            </div>
+            <div class="box-body col-sm-6">
+                <div style="width:100%; height:50px; background-color:darksalmon; border:2px solid red; border-radius:10px"><h2>Deaths</h2></div>
+                <div class="chart-container">
+                    <canvas id="chartDeath" style="width:100%; height:430px"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 
@@ -47,14 +81,13 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
     <script type="text/javascript">
-
         $(function () {
     var chartName = "chart";
         var ctx = document.getElementById(chartName).getContext('2d');
         var data = {
                 labels: @Html.Raw(XLabels),
                 datasets: [{
-                    label: "Departments Chart",
+                    label: "Cases",
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -85,6 +118,81 @@
                     ],
                     borderWidth: 1,
                     data: @Html.Raw(YValues)
+    }]
+            };
+
+var options = {
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            beginAtZero: true
+                        },
+                        gridLines: {
+                            display: true,
+                            color: "rgba(255,99,164,0.2)"
+                        }
+}],
+                    xAxes: [{
+                        ticks: {
+                            min: 0,
+                            beginAtZero: true
+                        },
+                        gridLines: {
+                            display: false
+                        }
+                    }]
+                }
+            };
+
+       var myChart = new  Chart(ctx, {
+                options: options,
+                data: data,
+                type:'bar'
+
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+    var chartName = "chartDeath";
+        var ctx = document.getElementById(chartName).getContext('2d');
+        var data = {
+                labels: @Html.Raw(XLabelsDeath),
+                datasets: [{
+                    label: "Deaths",
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 0, 0)',
+                        'rgba(0, 255, 0)',
+                        'rgba(0, 0, 255)',
+                        'rgba(192, 192, 192)',
+                        'rgba(255, 255, 0)',
+                        'rgba(255, 0, 255)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 0, 0)',
+                        'rgba(0, 255, 0)',
+                        'rgba(0, 0, 255)',
+                        'rgba(192, 192, 192)',
+                        'rgba(255, 255, 0)',
+                        'rgba(255, 0, 255)'
+                    ],
+                    borderWidth: 1,
+                    data: @Html.Raw(YValuesDeath)
     }]
             };
 

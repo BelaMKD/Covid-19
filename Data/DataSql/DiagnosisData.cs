@@ -67,5 +67,21 @@ namespace Data.DataSql
                 .ThenInclude(z => z.Virus)
                 .ToList();
         }
+        public IEnumerable<Diagnosis> Deaths()
+        {
+            return dbContext.Diagnoses
+                .Where(x => x.IsPositive == true && x.Recovered == false)
+                .Include(x => x.Patient)
+                .ThenInclude(p => p.Hospital)
+                .Include(x => x.DiagnosisViruses)
+                .ThenInclude(z => z.Virus)
+                .ToList();
+        }
+        public IEnumerable<Diagnosis> Recovered()
+        {
+            return dbContext.Diagnoses
+                .Where(x => x.IsPositive == true && x.Recovered == true)
+                .ToList();
+        }
     }
 }
