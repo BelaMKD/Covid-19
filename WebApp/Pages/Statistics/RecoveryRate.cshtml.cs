@@ -13,7 +13,8 @@ namespace WebApp.Pages.Statistics
     {
         private readonly IDiagnosisService diagnosisService;
         public List<StatisticsCore> RecoveryRate { get; private set; }
-
+        public IEnumerable<Domain.Diagnosis> Deaths { get; set; }
+        public IEnumerable<Domain.Diagnosis> Recovered { get; set; }
         public RecoveryRateModel(IDiagnosisService diagnosisService)
         {
             this.diagnosisService = diagnosisService;
@@ -23,6 +24,8 @@ namespace WebApp.Pages.Statistics
 
         public void OnGet()
         {
+            Deaths = diagnosisService.Deaths();
+            Recovered = diagnosisService.Recovered();
             Diagnoses = diagnosisService.GetDiagnosesWithCorona();
             var newDiagnosis = Diagnoses.GroupBy(d => d.Recovered == true);
             foreach (var item in newDiagnosis)
