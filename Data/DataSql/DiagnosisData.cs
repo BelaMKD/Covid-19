@@ -62,6 +62,7 @@ namespace Data.DataSql
             return dbContext.Diagnoses
                 .Where(x => x.IsPositive == true)
                 .Include(x => x.Patient)
+                .ThenInclude(p => p.Hospital)
                 .Include(x => x.DiagnosisViruses)
                 .ThenInclude(z => z.Virus)
                 .ToList();
