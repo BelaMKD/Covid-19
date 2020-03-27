@@ -1,0 +1,105 @@
+﻿@page
+@model WebApp.Pages.Statistics.TableModel
+@{
+    ViewData["Title"] = "Table";
+    var i = 1;
+}
+
+@section Styles{
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+}
+
+<div class="row justify-content-around">
+    <div class="card text-white bg-primary mb-3" style="min-width: 12rem; text-align:center">
+        <div class="card-header" style="font-size:2rem">Cases</div>
+        <div class="card-body">
+            <h5 class="card-title" style="font-size:5rem">@Model.Diagnoses.Count()</h5>
+        </div>
+    </div>
+    <div class="card text-white bg-success mb-3" style="min-width: 12rem; text-align:center">
+        <div class="card-header" style="font-size:2rem">Recovered</div>
+        <div class="card-body">
+            <h5 class="card-title" style="font-size:5rem">@Model.Recovered.Count()</h5>
+        </div>
+    </div>
+    <div class="card text-white bg-danger mb-3" style="min-width: 12rem; text-align:center">
+        <div class="card-header" style="font-size:2rem">Deaths</div>
+        <div class="card-body">
+            <h5 class="card-title" style="font-size:5rem">@Model.Deaths.Count()</h5>
+        </div>
+    </div>
+</div>
+
+<div class="card text-center">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" href="./Statistic">Per Cities</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="./MaleFemale">Male:Female</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="./InHospital">In Hospital</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="./GroupByAge">By Age</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="./RecoveryRate">Recovery Rate</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="./ByDate">By date</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="#">Table</a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="box-body col-sm-12">
+                <div class="chart-container">
+                    <table class="table" id="myTable" style="width:100%; height:480px">
+                        <thead style="background-color:darkslategrey; color:white">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Gender</th>
+                                <th scope="col">City</th>
+                                <th scope="col">Date of test</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var diagnose in Model.Diagnoses)
+                            {
+                                <tr>
+                                    <td>@i</td>
+                                    <td>@diagnose.Patient.Name</td>
+                                    <td>@diagnose.Patient.Gender</td>
+                                    <td>@diagnose.Patient.City</td>
+                                    <td>@diagnose.DateOfTest</td>
+                                </tr>
+                                i++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts{
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}
+
+

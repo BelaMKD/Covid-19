@@ -10,8 +10,8 @@ namespace BusinessLayer
         public string Gender { get; set; }
         public string Age { get; set; }
         public int TotalPatients { get; set; }
-        public bool Recovered { get; set; }
-
+        public string Recovered { get; set; }
+        public DateTime DateTime { get; set; }
 
     }
 }

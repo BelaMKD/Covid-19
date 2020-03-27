@@ -9,32 +9,31 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace WebApp.Pages.Statistics
 {
-    public class RecoveryRateModel : PageModel
+    public class ByDateModel : PageModel
     {
         private readonly IDiagnosisService diagnosisService;
-        public List<StatisticsCore> RecoveryRate { get; private set; }
+        public IEnumerable<Domain.Diagnosis> Diagnoses { get; set; }
         public IEnumerable<Domain.Diagnosis> Deaths { get; set; }
         public IEnumerable<Domain.Diagnosis> Recovered { get; set; }
-        public RecoveryRateModel(IDiagnosisService diagnosisService)
+
+        public List<StatisticsCore> ByDate { get; set; }
+        public ByDateModel(IDiagnosisService diagnosisService)
         {
             this.diagnosisService = diagnosisService;
-            RecoveryRate = new List<StatisticsCore>();
+            ByDate = new List<StatisticsCore>();
         }
-        public IEnumerable<Domain.Diagnosis> Diagnoses { get; set; }
-
         public void OnGet()
         {
             Deaths = diagnosisService.Deaths();
             Recovered = diagnosisService.Recovered();
             Diagnoses = diagnosisService.GetDiagnosesWithCorona();
-            var newDiagnosis = Diagnoses.GroupBy(d => d.Recovered);
-            foreach (var item in newDiagnosis)
+            var Ddiagnoses = Diagnoses.GroupBy(x => x.DateOfTest);
+            foreach (var item in Ddiagnoses)
             {
-                RecoveryRate.Add(new StatisticsCore
+
+                ByDate.Add(new StatisticsCore
                 {
-                    Recovered = item.Key==true ? 
-                    "Recovered " + String.Format("{0:0.00}", ((double)item.Count() / Diagnoses.Count()) * 100) + "%" 
-                    : "Deaths " + String.Format("{0:0.00}", ((double)item.Count()/Diagnoses.Count())*100) + "%",
+                    DateTime = item.Key,
                     TotalPatients = item.Count()
                 });
             }
