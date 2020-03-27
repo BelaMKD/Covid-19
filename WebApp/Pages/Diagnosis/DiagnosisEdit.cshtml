@@ -1,4 +1,4 @@
-﻿@page 
+﻿@page
 @model WebApp.DiagnosisEditModel
 @{
     ViewData["Title"] = "DiagnosisEdit";
@@ -18,36 +18,60 @@
     </div>
 
     <h3>Does he have a virus?</h3>
-    @for (int i = 0; i < Model.Viruses.Count(); i++)
-    {
-        <div class="form-check" style="margin-bottom:20px;">
-            <input type="hidden" asp-for="@Model.Viruses[i].Name" />
-            <input type="hidden" asp-for="Viruses[i].Id" />
-            <input class="form-check-input" type="checkbox" asp-for="Viruses[i].IsSelected">
-            <label class="form-check-label">@Model.Viruses[i].Name</label>
+    <div class="row">
+        @for (int i = 0; i < Model.Viruses.Count(); i++)
+        {
+            <div class="col-sm-3">
+                <div class="form-check" style="margin-bottom:20px;">
+                    <input type="hidden" asp-for="@Model.Viruses[i].Name" />
+                    <input type="hidden" asp-for="Viruses[i].Id" />
+                    <input class="form-check-input" type="checkbox" asp-for="Viruses[i].IsSelected">
+                    <label class="form-check-label">@Model.Viruses[i].Name</label>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <h3>Recover and Recovery Date?</h3>
+            <div class="form-check" style="margin-bottom:5%">
+                <input id="check" checked type="checkbox" class="form-check-input" asp-for="Diagnosis.Recovered" />
+            </div>
+
+            <div class="form-group date">
+                <label asp-for="Diagnosis.DateRecover"></label>
+                <input class="form-control" asp-for="Diagnosis.DateRecover">
+            </div>
         </div>
-    }
-    <h3>Will the patient Recover and Recovery Date?</h3>
-    <div class="form-check" style="margin-bottom:5%">
-        <input id="check" checked type="checkbox" class="form-check-input" asp-for="Diagnosis.Recovered" />
-    </div>
 
-    <div class="form-group date">
-        <label asp-for="Diagnosis.DateRecover"></label>
-        <input class="form-control" asp-for="Diagnosis.DateRecover">
+        <div class="col-sm-6">
+            <h3>Death and time of Death ?</h3>
+            <div class="form-check" style="margin-bottom:5%">
+                <input id="checkDeath" type="checkbox" class="form-check-input" asp-for="Diagnosis.Death" />
+            </div>
+            <div class="form-group deathDate">
+                <label asp-for="Diagnosis.DateOfDeath"></label>
+                <input class="form-control" asp-for="Diagnosis.DateOfDeath" />
+            </div>
+        </div>
     </div>
-
 
     <div class="form-group" style="margin-top:50px;">
         <button class="btn btn-primary" type="submit">Save</button>
         <a class="btn btn-primary" asp-page="./DiagnosisList" asp-route-id="@Model.Patient.Id">Back</a>
     </div>
+
 </form>
 
-@section Scripts{ 
-<script>
-    $('#check').click(function() {
-      $('.date')[this.checked ? "show" : "hide"]();
-    });
-</script>
+@section Scripts{
+    <script>
+        $('#check').click(function () {
+            $('.date')[this.checked ? "show" : "hide"]();
+        });
+        $('#checkDeath').click(function () {
+            $('.deathDate')[this.checked ? "show" : "hide"]();
+        });
+    </script>
+   
 }

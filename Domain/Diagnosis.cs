@@ -22,8 +22,14 @@ namespace Domain
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? DateRecover { get; set; }
-        public bool Recovered { get; set; }
         public List<DiagnosisVirus> DiagnosisViruses { get; set; }
         public bool IsPositive { get; set; }
+        public bool Recovered { get; set; }
+        public bool Death { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Date Of Death")]
+        public DateTime? DateOfDeath { get; set; }
     }
 }

@@ -22,7 +22,6 @@ namespace Domain
         public Hospital Hospital { get; set; }
         public int HospitalId { get; set; }
 
-
         public List<Diagnosis> Diagnosis { get; set; }
 
     }
