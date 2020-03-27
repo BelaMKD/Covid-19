@@ -30,20 +30,22 @@ namespace Data.DataSql
         public Virus GetVirusById(int id)
         {
             return dbContext.Viruses
-                .Include(x=>x.Symptoms)
+                .Include(x=>x.VirusSymptoms)
+                .ThenInclude(z=>z.Symptom)
                 .SingleOrDefault(x => x.Id == id);
         }
 
         public List<Virus> GetViruses()
         {
             return dbContext.Viruses
-                .Include(x=>x.Symptoms)
+                .Include(x=>x.VirusSymptoms)
+                .ThenInclude(z=>z.Symptom)
                 .ToList();
         }
 
         public Virus UpdateVirus(Virus virus)
         {
-            dbContext.Entry(virus).State = EntityState.Modified;
+            dbContext.Update(virus);
             return virus;
         }
     }

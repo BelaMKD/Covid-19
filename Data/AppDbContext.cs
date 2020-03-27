@@ -21,6 +21,7 @@ namespace Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DiagnosisVirus>().HasKey(dv => new { dv.DiagnosisId, dv.VirusId });
+            modelBuilder.Entity<VirusSymptom>().HasKey(dv => new { dv.SymptomId, dv.VirusId });
             base.OnModelCreating(modelBuilder);
         }
 

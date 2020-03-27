@@ -20,10 +20,10 @@
                 <td>@virus.Name</td>
                 <td>@virus.VirusDescription</td>
                 <td>
-                    @foreach (var symptom in virus.Symptoms)
+                    @foreach (var virusSymptom in virus.VirusSymptoms)
                     {
-                        @(symptom.Name +  ", ")
 
+                        @(virusSymptom.Symptom.Name +  ", ")
                     }
                 </td>
                 <td><a class="btn btn-primary" asp-page="./VirusEdit" asp-route-id="@virus.Id">Edit</a></td>

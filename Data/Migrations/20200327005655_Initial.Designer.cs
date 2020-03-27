@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200320094021_Many-to-Many-Diagnosis-Viruses")]
-    partial class ManytoManyDiagnosisViruses
+    [Migration("20200327005655_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,6 +33,9 @@ namespace Data.Migrations
 
                     b.Property<DateTime?>("DateRecover")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsPositive")
+                        .HasColumnType("bit");
 
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
@@ -59,7 +62,7 @@ namespace Data.Migrations
 
                     b.HasIndex("VirusId");
 
-                    b.ToTable("DiagnosisVirus");
+                    b.ToTable("DiagnosisViruses");
                 });
 
             modelBuilder.Entity("Domain.Hospital", b =>
@@ -122,12 +125,7 @@ namespace Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("VirusId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("VirusId");
 
                     b.ToTable("Symptoms");
                 });
@@ -151,6 +149,21 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Viruses");
+                });
+
+            modelBuilder.Entity("Domain.VirusSymptom", b =>
+                {
+                    b.Property<int>("SymptomId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VirusId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SymptomId", "VirusId");
+
+                    b.HasIndex("VirusId");
+
+                    b.ToTable("VirusSymptom");
                 });
 
             modelBuilder.Entity("Domain.Diagnosis", b =>
@@ -186,11 +199,19 @@ namespace Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Symptom", b =>
+            modelBuilder.Entity("Domain.VirusSymptom", b =>
                 {
-                    b.HasOne("Domain.Virus", null)
-                        .WithMany("Symptoms")
-                        .HasForeignKey("VirusId");
+                    b.HasOne("Domain.Symptom", "Symptom")
+                        .WithMany("VirusSymptoms")
+                        .HasForeignKey("SymptomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Virus", "Virus")
+                        .WithMany("VirusSymptoms")
+                        .HasForeignKey("VirusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

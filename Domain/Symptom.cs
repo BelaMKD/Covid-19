@@ -9,5 +9,10 @@ namespace Domain
         public int Id { get; set; }
         public string Name { get; set; }
         public bool IsSelected { get; set; }
+        public List<VirusSymptom> VirusSymptoms { get; set; }
+        public Symptom()
+        {
+            VirusSymptoms = new List<VirusSymptom>();
+        }
     }
 }

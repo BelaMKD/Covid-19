@@ -9,15 +9,14 @@ namespace Domain
     {
         public Virus()
         {
-            Symptoms = new List<Symptom>();
+            VirusSymptoms = new List<VirusSymptom>();
             DiagnosisViruses = new List<DiagnosisVirus>();
         }
         public int Id { get; set; }
         public string Name { get; set; }
         public string VirusDescription { get; set; }
-        public List<Symptom> Symptoms { get; set; }
         public bool IsSelected { get; set; }
-
+        public List<VirusSymptom> VirusSymptoms { get; set; }
         public List<DiagnosisVirus> DiagnosisViruses { get; set; }
     }
 }
