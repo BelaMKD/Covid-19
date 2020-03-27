@@ -29,16 +29,12 @@ namespace WebApp
             if (id.HasValue)
             {
                 Virus = virusService.GetVirusById(id.Value);
-                if (Virus.Symptoms != null)
-                {
-                    Virus.Symptoms.Clear();
-                    virusService.Commit();
-                }
-
-                    if (Virus == null)
+                if (Virus == null)
                 {
                     return RedirectToPage("./List");
                 }
+                Virus.VirusSymptoms.Clear();
+                virusService.Commit();
             }
             else
             {
@@ -52,17 +48,14 @@ namespace WebApp
         {
             if (ModelState.IsValid)
             {
-             
+
                 foreach (var symptom in Symptoms)
                 {
                     if (symptom.IsSelected)
                     {
-                        Virus.Symptoms.Add(symptomService.GetSymptomById(symptom.Id));
+                        Virus.VirusSymptoms.Add(new VirusSymptom { Symptom = symptomService.GetSymptomById(symptom.Id) } );
                     }
-                    else
-                    {
-                        Virus.Symptoms.Remove(symptomService.GetSymptomById(symptom.Id));
-                    }
+
                 }
                 if (Virus.Id == 0)
                 {

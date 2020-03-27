@@ -123,12 +123,7 @@ namespace Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("VirusId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("VirusId");
 
                     b.ToTable("Symptoms");
                 });
@@ -152,6 +147,21 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Viruses");
+                });
+
+            modelBuilder.Entity("Domain.VirusSymptom", b =>
+                {
+                    b.Property<int>("SymptomId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VirusId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SymptomId", "VirusId");
+
+                    b.HasIndex("VirusId");
+
+                    b.ToTable("VirusSymptom");
                 });
 
             modelBuilder.Entity("Domain.Diagnosis", b =>
@@ -187,11 +197,19 @@ namespace Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Symptom", b =>
+            modelBuilder.Entity("Domain.VirusSymptom", b =>
                 {
-                    b.HasOne("Domain.Virus", null)
-                        .WithMany("Symptoms")
-                        .HasForeignKey("VirusId");
+                    b.HasOne("Domain.Symptom", "Symptom")
+                        .WithMany("VirusSymptoms")
+                        .HasForeignKey("SymptomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Virus", "Virus")
+                        .WithMany("VirusSymptoms")
+                        .HasForeignKey("VirusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
