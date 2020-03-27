@@ -4,14 +4,16 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200327083349_Death")]
+    partial class Death
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,7 +28,7 @@ namespace Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime?>("DateOfDeath")
+                    b.Property<DateTime>("DateOfDeath")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DateOfTest")
@@ -129,7 +131,12 @@ namespace Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("VirusId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("VirusId");
 
                     b.ToTable("Symptoms");
                 });
@@ -153,21 +160,6 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Viruses");
-                });
-
-            modelBuilder.Entity("Domain.VirusSymptom", b =>
-                {
-                    b.Property<int>("SymptomId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VirusId")
-                        .HasColumnType("int");
-
-                    b.HasKey("SymptomId", "VirusId");
-
-                    b.HasIndex("VirusId");
-
-                    b.ToTable("VirusSymptom");
                 });
 
             modelBuilder.Entity("Domain.Diagnosis", b =>
@@ -203,19 +195,11 @@ namespace Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.VirusSymptom", b =>
+            modelBuilder.Entity("Domain.Symptom", b =>
                 {
-                    b.HasOne("Domain.Symptom", "Symptom")
-                        .WithMany("VirusSymptoms")
-                        .HasForeignKey("SymptomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Virus", "Virus")
-                        .WithMany("VirusSymptoms")
-                        .HasForeignKey("VirusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Domain.Virus", null)
+                        .WithMany("Symptoms")
+                        .HasForeignKey("VirusId");
                 });
 #pragma warning restore 612, 618
         }

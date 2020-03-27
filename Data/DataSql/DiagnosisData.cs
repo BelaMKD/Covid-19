@@ -70,7 +70,7 @@ namespace Data.DataSql
         public IEnumerable<Diagnosis> Deaths()
         {
             return dbContext.Diagnoses
-                .Where(x => x.IsPositive == true && x.Recovered == false)
+                .Where(x => x.IsPositive == true && x.Death == true)
                 .Include(x => x.Patient)
                 .ThenInclude(p => p.Hospital)
                 .Include(x => x.DiagnosisViruses)
