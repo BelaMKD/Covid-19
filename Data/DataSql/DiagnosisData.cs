@@ -83,5 +83,6 @@ namespace Data.DataSql
                 .Where(x => x.IsPositive == true && x.Recovered == true)
                 .ToList();
         }
+        
     }
 }

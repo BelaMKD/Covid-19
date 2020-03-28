@@ -2,9 +2,9 @@
 @model WebApp.Pages.StatisticModel
 @{
     var XLabels = Newtonsoft.Json.JsonConvert.SerializeObject(Model.RegionPatients.Select(x => x.Region).ToList());
-    var YValues = Newtonsoft.Json.JsonConvert.SerializeObject(Model.RegionPatients.Select(x => x.PatientNumber).ToList());
+    var YValues = Newtonsoft.Json.JsonConvert.SerializeObject(Model.RegionPatients.Select(x => x.TotalPatients).ToList());
     var XLabelsDeath = Newtonsoft.Json.JsonConvert.SerializeObject(Model.PatientDeath.Select(x => x.Region).ToList());
-    var YValuesDeath = Newtonsoft.Json.JsonConvert.SerializeObject(Model.PatientDeath.Select(x => x.PatientNumber).ToList());
+    var YValuesDeath = Newtonsoft.Json.JsonConvert.SerializeObject(Model.PatientDeath.Select(x => x.TotalPatients).ToList());
 
     ViewData["Title"] = "Statistic";
 }

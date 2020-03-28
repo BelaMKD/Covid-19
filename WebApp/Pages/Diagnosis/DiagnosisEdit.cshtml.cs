@@ -44,7 +44,19 @@ namespace WebApp
                 {
                     return RedirectToPage("NotFound");
                 }
-                
+                Viruses = virusService.GetViruses();
+
+                foreach (var item in Viruses)
+                {
+                    foreach(var vd in Diagnosis.DiagnosisViruses)
+                    {
+                        if(item.Id == vd.VirusId)
+                        {
+                            item.IsSelected = true;
+                        }
+                    }
+                }   // Pri edit na diagnoza Virusite koi vekje gi ima pacientot da bida stiklirani
+
             }
             else
             {

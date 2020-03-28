@@ -6,6 +6,7 @@ namespace BusinessLayer
 {
     public class StatisticsCore
     {
+        public string Region { get; set; }
         public string Hospital { get; set; }
         public string Gender { get; set; }
         public string Age { get; set; }

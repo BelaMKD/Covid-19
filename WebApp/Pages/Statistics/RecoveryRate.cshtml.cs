@@ -28,6 +28,7 @@ namespace WebApp.Pages.Statistics
             Recovered = diagnosisService.Recovered();
             Diagnoses = diagnosisService.GetDiagnosesWithCorona();
             var newDiagnosis = Diagnoses.GroupBy(d => d.Recovered);
+           
             foreach (var item in newDiagnosis)
             {
                 RecoveryRate.Add(new StatisticsCore

@@ -15,14 +15,14 @@ namespace WebApp.Pages
         public IEnumerable<Domain.Diagnosis> Diagnoses { get; set; }
         public IEnumerable<Domain.Diagnosis> Deaths { get; set; }
         public IEnumerable<Domain.Diagnosis> Recovered { get; set; }
-        public List<RegionPatient> RegionPatients { get; set; }
-        public List<RegionPatient> PatientDeath { get; set; }
+        public List<StatisticsCore> RegionPatients { get; set; }
+        public List<StatisticsCore> PatientDeath { get; set; }
 
         public StatisticModel(IDiagnosisService diagnosisService)
         {
             this.diagnosisService = diagnosisService;
-            RegionPatients = new List<RegionPatient>();
-            PatientDeath = new List<RegionPatient>();
+            RegionPatients = new List<StatisticsCore>();
+            PatientDeath = new List<StatisticsCore>();
         }
         public void OnGet()
         {
@@ -33,19 +33,19 @@ namespace WebApp.Pages
             foreach (var item in Ddiagnoses)
             {
 
-                RegionPatients.Add(new RegionPatient
+                RegionPatients.Add(new StatisticsCore
                 {
                     Region = item.Key,
-                    PatientNumber = item.Count()
+                    TotalPatients = item.Count()
                 });
             }
             var patientDeath = Deaths.GroupBy(x => x.Patient.City);
             foreach (var item in patientDeath)
             {
-                PatientDeath.Add(new RegionPatient
+                PatientDeath.Add(new StatisticsCore
                 {
                     Region = item.Key,
-                    PatientNumber = item.Count()
+                    TotalPatients = item.Count()
                 });
             }
         }

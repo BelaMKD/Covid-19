@@ -23,7 +23,7 @@
         @foreach (var diagnose in Model.Patient.Diagnosis)
         {
         <tr>
-            <td>@diagnose.DateOfTest</td>
+            <td>@diagnose.DateOfTest.Day / @diagnose.DateOfTest.Month / @diagnose.DateOfTest.Year</td>
             <td>
                 @foreach (var virus in diagnose.DiagnosisViruses)
                 {
