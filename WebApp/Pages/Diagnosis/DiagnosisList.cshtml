@@ -33,7 +33,7 @@
             <td>@diagnose.Recovered</td>
             <td style="visibility:@(diagnose.Recovered? "visible" : "hidden")">@diagnose.DateRecover</td>
             <td>@diagnose.Death</td>
-            <td style="visibility:@(diagnose.Recovered? "hidden" : "show")">@diagnose.DateOfDeath</td>
+            <td style="visibility:@(diagnose.Death? "visible" : "hidden")">@diagnose.DateOfDeath</td>
             <td>
                 <a class="btn btn-primary" asp-page="./DiagnosisEdit" asp-route-id="@diagnose.Id" asp-route-patientId="@Model.Patient.Id">Edit
                 </a>
@@ -48,7 +48,7 @@
     </tbody>
     <tfoot style="visibility:@(Model.Patient.Diagnosis.Count()==0? "visible":"hidden")">
         <tr>
-            <td colspan="4">There are no diagnosis for this patient</td>
+            <td colspan="7">There are no diagnosis for this patient</td>
         </tr>
     </tfoot>
 </table>

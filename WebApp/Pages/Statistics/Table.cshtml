@@ -34,7 +34,7 @@
     <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
-                <a class="nav-link active" href="./Statistic">Per Cities</a>
+                <a class="nav-link" href="./Statistic">Per Cities</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="./MaleFemale">Male:Female</a>
@@ -66,19 +66,38 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Gender</th>
+                                <th scope="col">Age</th>
                                 <th scope="col">City</th>
                                 <th scope="col">Date of test</th>
+                                <th scope="col">Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var diagnose in Model.Diagnoses)
+                            @foreach (var diagnose in Model.Diagnoses.GroupBy(x => x.Patient.Name))
                             {
                                 <tr>
                                     <td>@i</td>
-                                    <td>@diagnose.Patient.Name</td>
-                                    <td>@diagnose.Patient.Gender</td>
-                                    <td>@diagnose.Patient.City</td>
-                                    <td>@diagnose.DateOfTest</td>
+                                    <td>@diagnose.First().Patient.Name</td>
+                                    <td>@diagnose.First().Patient.Gender</td>
+                                    <td>@(DateTime.Now.Year - diagnose.First().Patient.BirthDate.Year)</td>
+                                    <td>@diagnose.First().Patient.City</td>
+                                    <td>@diagnose.Last().DateOfTest.Day / @diagnose.Last().DateOfTest.Month / @diagnose.Last().DateOfTest.Year</td>
+                                    <td>
+                                        @if (diagnose.Last().Death == false && diagnose.Last().Recovered == false)
+                                        {
+                                            <p class="btn-primary">Active case</p>
+
+                                        }
+                                        @if (diagnose.Last().Death == true && diagnose.Last().Recovered == false)
+                                        {
+                                            <p class="btn-danger">Deceased person</p>
+                                        }
+                                        @if (diagnose.Last().Death == false && diagnose.Last().Recovered == true)
+                                        {
+                                            <p class="btn-success">Recovered</p>
+                                        }
+
+                                    </td>
                                 </tr>
                                 i++;
                             }
