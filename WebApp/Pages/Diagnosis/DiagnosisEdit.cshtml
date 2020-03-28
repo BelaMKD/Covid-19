@@ -36,7 +36,7 @@
         <div class="col-sm-6">
             <h3>Recover and Recovery Date?</h3>
             <div class="form-check" style="margin-bottom:5%">
-                <input id="check" type="checkbox" class="form-check-input" asp-for="Diagnosis.Recovered" />
+                <input id="check" type="checkbox" name="one" onclick="onlyOne(this)" class="form-check-input" asp-for="Diagnosis.Recovered" />
             </div>
 
             <div class="form-group date">
@@ -48,9 +48,9 @@
         <div class="col-sm-6">
             <h3>Death and time of Death ?</h3>
             <div class="form-check" style="margin-bottom:5%">
-                <input id="checkDeath" type="checkbox" class="form-check-input" asp-for="Diagnosis.Death" />
+                <input id="checkDeath" type="checkbox" name="one" onclick="onlyOne(this)" class="form-check-input" asp-for="Diagnosis.Death" />
             </div>
-            <div class="form-group deathDate">
+            <div class="form-group dateDeath">
                 <label asp-for="Diagnosis.DateOfDeath"></label>
                 <input class="form-control" asp-for="Diagnosis.DateOfDeath" />
             </div>
@@ -70,8 +70,16 @@
             $('.date')[this.checked ? "show" : "hide"]();
         });
         $('#checkDeath').click(function () {
-            $('.deathDate')[this.checked ? "show" : "hide"]();
+            $('.dateDeath')[this.checked ? "show" : "hide"]();
         });
+    </script>
+    <script>
+        function onlyOne(checkbox) {
+            var checkboxes = document.getElementsByName('one')
+            checkboxes.forEach((item) => {
+                if (item !== checkbox) item.checked = false
+            })
+        }
     </script>
    
 }
