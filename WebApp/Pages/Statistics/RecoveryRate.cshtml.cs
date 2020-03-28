@@ -27,15 +27,17 @@ namespace WebApp.Pages.Statistics
             Deaths = diagnosisService.Deaths();
             Recovered = diagnosisService.Recovered();
             Diagnoses = diagnosisService.GetDiagnosesWithCorona();
-            var newDiagnosis = Diagnoses.GroupBy(d => d.Recovered);
+            var newDiagnosis = Diagnoses
+                .Where(x=>(x.Death==true && x.Recovered==true) || (x.Death == true && x.Recovered == false) || (x.Death == false && x.Recovered == true))
+                .GroupBy(d => d.Recovered);
            
             foreach (var item in newDiagnosis)
             {
                 RecoveryRate.Add(new StatisticsCore
                 {
-                    Recovered = item.Key==true ? 
-                    "Deaths " + String.Format("{0:0.00}", ((double)item.Count() / Diagnoses.Count()) * 100) + "%" 
-                    : "Recovered " + String.Format("{0:0.00}", ((double)item.Count()/Diagnoses.Count())*100) + "%",
+                    Recovered = item.Key==true ?
+                    "Recovered " + String.Format("{0:0.00}", ((double)item.Count() / Diagnoses.Count()) * 100) + "%" 
+                    : "Deaths " + String.Format("{0:0.00}", ((double)item.Count()/Diagnoses.Count())*100) + "%",
                     TotalPatients = item.Count()
                 });
             }
