@@ -4,32 +4,41 @@
     ViewData["Title"] = "VirusList";
 }
 
-<table class="table">
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Description</th>
-            <th scope="col">Symptoms</th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var virus in Model.Viruses)
-        {
+    <table class="table">
+        <thead class="thead-dark">
             <tr>
-                <td>@virus.Name</td>
-                <td>@virus.VirusDescription</td>
-                <td>
-                    @foreach (var virusSymptom in virus.VirusSymptoms)
-                    {
-
-                        @(virusSymptom.Symptom.Name +  ", ")
-                    }
-                </td>
-                <td><a class="btn btn-primary" asp-page="./VirusEdit" asp-route-id="@virus.Id">Edit</a></td>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Symptoms</th>
+                <th scope="col"></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var virus in Model.Viruses)
+            {
+                <tr>
+                    <td>@virus.Name</td>
+                    <td>@virus.VirusDescription</td>
+                    <td>
+                        @foreach (var virusSymptom in virus.VirusSymptoms)
+                        {
+
+                            @virusSymptom.Symptom.Name
+                            <br />
+                        }
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" asp-page="./VirusEdit" asp-route-id="@virus.Id">Edit</a>
+                        <form method="post" asp-page-handler="DeleteVirus" asp-page="./VirusEdit" asp-route-id="@virus.Id" class="d-inline">
+                            <button type="submit" onclick="return confirm('Delete virus?')" class="btn btn-danger d-inline-block">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
 
 <a class="btn btn-primary" asp-page="./VirusEdit">Add Virus</a>

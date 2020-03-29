@@ -48,5 +48,14 @@ namespace Data.DataSql
             dbContext.Update(virus);
             return virus;
         }
+        public Virus RemoveVirus(int id)
+        {
+            var tempVirus = dbContext.Viruses.SingleOrDefault(x => x.Id == id);
+            if (tempVirus!=null)
+            {
+                dbContext.Viruses.Remove(tempVirus);
+            }
+            return tempVirus;
+        }
     }
 }
