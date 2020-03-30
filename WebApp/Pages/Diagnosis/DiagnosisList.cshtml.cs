@@ -17,6 +17,8 @@ namespace WebApp
         public Patient Patient { get; set; }
         [BindProperty]
         public Diagnosis Diagnosis { get; set; }
+        [TempData]
+        public string Message { get; set; }
         public DiagnosisListModel(IPatientService patientService, IDiagnosisService diagnosesService)
         {
             this.patientService = patientService;

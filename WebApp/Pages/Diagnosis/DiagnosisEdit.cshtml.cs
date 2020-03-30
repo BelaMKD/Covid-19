@@ -62,6 +62,11 @@ namespace WebApp
             {
                 Diagnosis = new Diagnosis();
                 Patient = patientService.GetPatientById(patientId);
+                if(Patient.Diagnosis.Any(d => d.Death == true))
+                {
+                    TempData["Message"] = "Can not Create new Diagnose because Patient is Dead!";
+                    return RedirectToPage("DiagnosisList", new { id = Patient.Id });
+                }
             }
             Viruses = virusService.GetViruses();
             return Page();

@@ -7,6 +7,13 @@
 <h2>Diagnosis for @Model.Patient.Name</h2>
 <a class="btn btn-success mb-2" asp-page="./DiagnosisEdit" asp-route-patientId="@Model.Patient.Id">Add diagnose</a>
 
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert alert-danger">
+        @Model.Message
+    </div>
+}
+
 <table class="table">
     <thead class="thead-dark">
         <tr>
