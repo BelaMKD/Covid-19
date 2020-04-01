@@ -27,8 +27,10 @@ namespace WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
             services.AddRazorPages();
             services.AddMvc().AddRazorRuntimeCompilation();
+            services.AddControllersWithViews().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddDbContext<AppDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("MyConnection")));
             services.AddScoped<IHospitalService, HospitalData>();
             services.AddScoped<IPatientService, PatientData>();
@@ -36,6 +38,8 @@ namespace WebApp
             services.AddScoped<ISymptomService, SymptomData>();
             services.AddScoped<IDiagnosisService, DiagnosisData>();
             services.AddScoped<IDiagnosesVirusesService, DiagnosisVirusData>();
+            services.AddScoped<IStatisticsService, StatisticsData>();
+
 
         }
 
@@ -63,6 +67,9 @@ namespace WebApp
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
