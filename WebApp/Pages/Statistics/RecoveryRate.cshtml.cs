@@ -38,7 +38,7 @@ namespace WebApp.Pages.Statistics
                     Recovered = item.Key==true ?
                     "Recovered " + String.Format("{0:0.00}", ((double)item.Count() / (Deaths.Count() + Recovered.Count())) * 100) + "%" 
                     : "Deaths " + String.Format("{0:0.00}", ((double)item.Count()/ (Deaths.Count() + Recovered.Count())) *100) + "%",
-                    TotalPatients = item.Count()
+                    TotalPatients = item.GroupBy(x => x.Patient.Name).Count()
                 });
             }
         }

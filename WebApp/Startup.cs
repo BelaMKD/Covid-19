@@ -36,6 +36,10 @@ namespace WebApp
             services.AddScoped<ISymptomService, SymptomData>();
             services.AddScoped<IDiagnosisService, DiagnosisData>();
             services.AddScoped<IDiagnosesVirusesService, DiagnosisVirusData>();
+            services.AddScoped<IStatisticService, StatisticData>();
+
+            services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
 
         }
 
@@ -63,6 +67,8 @@ namespace WebApp
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapControllers();
+
             });
         }
     }

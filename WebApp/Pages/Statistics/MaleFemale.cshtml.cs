@@ -36,7 +36,7 @@ namespace WebApp.Pages
                 MaleFemale.Add(new StatisticsCore
                 {
                     Gender = item.Key,
-                    TotalPatients = item.Count()
+                    TotalPatients = item.GroupBy(x => x.Patient.Name).Count()
                 });
             }
             var patientDeath = Deaths.GroupBy(d => d.Patient.Gender.ToString());
@@ -45,7 +45,7 @@ namespace WebApp.Pages
                 PatientDeath.Add(new StatisticsCore
                 {
                     Gender = item.Key,
-                    TotalPatients = item.Count()
+                    TotalPatients = item.GroupBy(x => x.Patient.Name).Count()
                 });
             }
         }

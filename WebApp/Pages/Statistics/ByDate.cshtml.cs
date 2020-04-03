@@ -34,7 +34,7 @@ namespace WebApp.Pages.Statistics
                 ByDate.Add(new StatisticsCore
                 {
                     DateTime = item.Key,
-                    TotalPatients = item.Count()
+                    TotalPatients = item.GroupBy(x => x.Patient.Name).Count()
                 });
             }
         }

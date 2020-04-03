@@ -66,6 +66,7 @@ namespace Data.DataSql
                 .Include(x => x.DiagnosisViruses)
                 .ThenInclude(z => z.Virus)
                 .ToList();
+
         }
         public IEnumerable<Diagnosis> Deaths()
         {
