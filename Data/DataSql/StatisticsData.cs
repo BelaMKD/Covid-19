@@ -1,4 +1,5 @@
-﻿using Data.IServices;
+﻿using BusinessLayer;
+using Data.IServices;
 using Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -51,6 +52,17 @@ namespace Data.DataSql
                 .Include(p => p.Hospital)
                 .ToList();
         }
-       
+        
+        public IEnumerable<PatientInfo> GetPatientsInfo()
+        {
+            return dbContext.Patients
+                .Include(p => p.Diagnosis)
+                .Select(p => new PatientInfo {Id = p.Id, PatinetName = p.Name, Gender = p.Gender.ToString(), Birthday = p.BirthDate
+                , Hospital = new Hospital {Id = p.Hospital.Id, Name = p.Hospital.Name, City = p.Hospital.City}, Diagnoses = p.Diagnosis })
+                .ToList();
+
+
+        }
+
     }
 }
