@@ -35,10 +35,10 @@ namespace WebApp.Pages.Statistics
             {
                 RecoveryRate.Add(new StatisticsCore
                 {
-                    Recovered = item.Key == true ?
-                    "Recovered " + String.Format("{0:0.00}", ((double)item.Count() / (Deaths.Count() + Recovered.Count())) * 100) + "%"
-                    : "Deaths " + String.Format("{0:0.00}", ((double)item.Count() / (Deaths.Count() + Recovered.Count())) * 100) + "%",
-                    TotalPatients = item.Count()
+                    Recovered = item.Key==true ?
+                    "Recovered " + String.Format("{0:0.00}", ((double)item.Count() / (Deaths.Count() + Recovered.Count())) * 100) + "%" 
+                    : "Deaths " + String.Format("{0:0.00}", ((double)item.Count()/ (Deaths.Count() + Recovered.Count())) *100) + "%",
+                    TotalPatients = item.GroupBy(x => x.Patient.Name).Count()
                 });
             }
         }

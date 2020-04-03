@@ -9,26 +9,26 @@
     ViewData["Title"] = "InHospital";
 }
 
-<div class="row justify-content-around">
-    <div class="card text-white bg-primary mb-3" style="min-width: 12rem; text-align:center">
-        <div class="card-header" style="font-size:2rem">Cases</div>
-        <div class="card-body">
-            <h5 class="card-title" style="font-size:5rem">@Model.Diagnoses.Count()</h5>
+    <div class="row justify-content-around">
+        <div class="card text-white bg-primary mb-3" style="min-width: 12rem; text-align:center">
+            <div class="card-header" style="font-size:2rem">Cases</div>
+            <div class="card-body">
+                <h5 class="card-title" style="font-size:5rem">@Model.Diagnoses.GroupBy(x => x.Patient.Name).Count()</h5>
+            </div>
+        </div>
+        <div class="card text-white bg-success mb-3" style="min-width: 12rem; text-align:center">
+            <div class="card-header" style="font-size:2rem">Recovered</div>
+            <div class="card-body">
+                <h5 class="card-title" style="font-size:5rem">@Model.Recovered.GroupBy(x => x.Patient.Name).Count()</h5>
+            </div>
+        </div>
+        <div class="card text-white bg-danger mb-3" style="min-width: 12rem; text-align:center">
+            <div class="card-header" style="font-size:2rem">Deaths</div>
+            <div class="card-body">
+                <h5 class="card-title" style="font-size:5rem">@Model.Deaths.GroupBy(x => x.Patient.Name).Count()</h5>
+            </div>
         </div>
     </div>
-    <div class="card text-white bg-success mb-3" style="min-width: 12rem; text-align:center">
-        <div class="card-header" style="font-size:2rem">Recovered</div>
-        <div class="card-body">
-            <h5 class="card-title" style="font-size:5rem">@Model.Recovered.Count()</h5>
-        </div>
-    </div>
-    <div class="card text-white bg-danger mb-3" style="min-width: 12rem; text-align:center">
-        <div class="card-header" style="font-size:2rem">Deaths</div>
-        <div class="card-body">
-            <h5 class="card-title" style="font-size:5rem">@Model.Deaths.Count()</h5>
-        </div>
-    </div>
-</div>
 
 <div class="card text-center">
     <div class="card-header">

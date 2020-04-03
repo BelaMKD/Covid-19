@@ -16,7 +16,6 @@ namespace Data.DataSql
         {
             this.dbContext = dbContext;
         }
-
         public int Commit()
         {
             return dbContext.SaveChanges();

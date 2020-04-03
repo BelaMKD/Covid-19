@@ -12,5 +12,6 @@ namespace Data.IServices
         Virus UpdateVirus(Virus virus);
         List<Virus> GetViruses();
         int Commit();
+        Virus RemoveVirus(int id);
     }
 }

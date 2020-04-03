@@ -14,14 +14,12 @@ namespace WebApp
         private readonly IDiagnosisService diagnosisService;
         private readonly IVirusService virusService;
         private readonly IPatientService patientService;
-        private readonly IDiagnosesVirusesService diagnosesVirusesService;
 
-        public DiagnosisEditModel(IDiagnosisService diagnosisService, IVirusService virusService, IPatientService patientService,IDiagnosesVirusesService diagnosesVirusesService )
+        public DiagnosisEditModel(IDiagnosisService diagnosisService, IVirusService virusService, IPatientService patientService)
         {
             this.diagnosisService = diagnosisService;
             this.virusService = virusService;
             this.patientService = patientService;
-            this.diagnosesVirusesService = diagnosesVirusesService;
         }
 
         [BindProperty]
@@ -29,10 +27,7 @@ namespace WebApp
         [BindProperty]
         public List<Virus> Viruses { get; set; }
         [BindProperty]
-        public DiagnosisVirus DiagnosisVirus { get; set; }
-        [BindProperty]
         public Patient Patient { get; set; }
-        public IEnumerable<DiagnosisVirus> ListOfSelectedVirusis { get; set; }
         public IActionResult OnGet(int? id, int patientId)
         {
             if (id.HasValue)

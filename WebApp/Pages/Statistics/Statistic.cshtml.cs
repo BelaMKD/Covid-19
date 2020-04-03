@@ -36,7 +36,7 @@ namespace WebApp.Pages
                 RegionPatients.Add(new StatisticsCore
                 {
                     Region = item.Key,
-                    TotalPatients = item.Count()
+                    TotalPatients = item.GroupBy(x => x.Patient.Name).Count()
                 });
             }
             var patientDeath = Deaths.GroupBy(x => x.Patient.City);
@@ -45,7 +45,7 @@ namespace WebApp.Pages
                 PatientDeath.Add(new StatisticsCore
                 {
                     Region = item.Key,
-                    TotalPatients = item.Count()
+                    TotalPatients = item.GroupBy(x => x.Patient.Name).Count()
                 });
             }
         }

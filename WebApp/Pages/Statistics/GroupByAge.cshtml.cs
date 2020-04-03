@@ -36,7 +36,7 @@ namespace WebApp.Pages.Statistics
                 AgeGroup.Add(new StatisticsCore
                 {
                     Age = item.Key.ToString() + "-" + $"{item.Key + 9}",
-                    TotalPatients = item.Count()
+                    TotalPatients = item.GroupBy(x => x.Patient.Name).Count()
                 }); ;
             }
             var patientDeath = Deaths.GroupBy(x => 10 * ((DateTime.Now.Year - x.Patient.BirthDate.Year) / 10));
@@ -45,7 +45,7 @@ namespace WebApp.Pages.Statistics
                 PatientDeath.Add(new StatisticsCore
                 {
                     Age = item.Key.ToString() + "-" + $"{item.Key + 9}",
-                    TotalPatients = item.Count()
+                    TotalPatients = item.GroupBy(x => x.Patient.Name).Count()
                 });
             }
         }

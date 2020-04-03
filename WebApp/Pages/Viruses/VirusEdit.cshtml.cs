@@ -26,6 +26,7 @@ namespace WebApp
         }
         public IActionResult OnGet(int? id)
         {
+            Symptoms = symptomService.GetSymptoms();
             if (id.HasValue)
             {
                 Virus = virusService.GetVirusById(id.Value);
@@ -33,27 +34,32 @@ namespace WebApp
                 {
                     return RedirectToPage("./List");
                 }
-                Virus.VirusSymptoms.Clear();
-                virusService.Commit();
+                foreach (var item in Symptoms)
+                {
+                    foreach (var sv in Virus.VirusSymptoms)
+                    {
+                        if (item.Id==sv.SymptomId)
+                        {
+                            item.IsSelected = true;
+                        }
+                    }
+                }
             }
             else
             {
                 Virus = new Virus();
             }
-            Symptoms = symptomService.GetSymptoms();
-
             return Page();
         } 
         public IActionResult OnPost()
         {
             if (ModelState.IsValid)
             {
-
                 foreach (var symptom in Symptoms)
                 {
                     if (symptom.IsSelected)
                     {
-                        Virus.VirusSymptoms.Add(new VirusSymptom { Symptom = symptomService.GetSymptomById(symptom.Id) } );
+                        Virus.VirusSymptoms.Add(new VirusSymptom { Symptom=symptomService.GetSymptomById(symptom.Id)});
                     }
 
                 }
@@ -63,13 +69,25 @@ namespace WebApp
                 }
                 else
                 {
-                    virusService.UpdateVirus(Virus);
+                    var virus = virusService.GetVirusById(Virus.Id);
+                    virusService.RemoveVirus(virus.Id);
+                    virusService.CreateVirus(Virus);
                 }
                 virusService.Commit();
                 return RedirectToPage("./VirusList");
             }
             Symptoms = symptomService.GetSymptoms();
             return Page();
+        }
+        public IActionResult OnPostDeleteVirus(int id)
+        {
+            var virus = virusService.RemoveVirus(id);
+            if (virus == null)
+            {
+                return RedirectToPage("./VirusList");
+            }
+            virusService.Commit();
+            return RedirectToPage("./VirusList");
         }
     }
 }

@@ -21,5 +21,6 @@ namespace WebApp
         {
             Viruses = virusService.GetViruses();
         }
+
     }
 }
