@@ -27,7 +27,7 @@ namespace Data.DataSql
                 { 
                     Id=x.Id,
                     Name = x.Name,
-                    Gender = Convert.ToInt32(x.Gender),
+                    Gender = x.Gender.ToString(),
                     BirthDate = x.BirthDate,
                     City = x.City,
                     Hospital = new Hospital
@@ -45,7 +45,7 @@ namespace Data.DataSql
         {
             public int Id { get; set; }
             public string Name { get; set; }
-            public int Gender { get; set; }
+            public string Gender { get; set; }
             public DateTime BirthDate { get; set; }
             public string City { get; set; }
             public Hospital Hospital { get; set; }
