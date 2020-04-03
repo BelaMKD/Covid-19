@@ -22,7 +22,7 @@ namespace WebApp.Controllers.Api
         [HttpGet]
         public IActionResult GetPatients()
         {
-            var data = statisticsService.GetPatiens();
+            var data = statisticsService.GetPatientsInfo();
             return Ok(data);
 
         }
