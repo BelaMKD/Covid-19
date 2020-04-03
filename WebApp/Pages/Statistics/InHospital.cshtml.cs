@@ -45,7 +45,7 @@ namespace WebApp.Pages.Statistics
                 PatientDeath.Add(new StatisticsCore
                 {
                     Hospital = item.Key,
-                    TotalPatients = item.Count()
+                    TotalPatients = item.GroupBy(x => x.Patient.Name).Count()
                 });
             }
         }
