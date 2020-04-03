@@ -39,6 +39,7 @@ namespace WebApp
             services.AddScoped<IDiagnosisService, DiagnosisData>();
             services.AddScoped<IDiagnosesVirusesService, DiagnosisVirusData>();
             services.AddScoped<IStatisticsService, StatisticsData>();
+            services.AddScoped<IStatisticService, StatisticData>();
 
 
         }

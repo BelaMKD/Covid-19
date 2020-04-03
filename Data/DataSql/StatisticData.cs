@@ -19,12 +19,6 @@ namespace Data.DataSql
             this.hospitalService = hospitalService;
         }
 
-        public IEnumerable<Patient> Patients()
-        {
-            return dbContext.Patients
-                .Include(x=>x.Hospital)
-                .ToList();
-        }
 
         public IEnumerable<PatientInfo> GetPatients()
         {
