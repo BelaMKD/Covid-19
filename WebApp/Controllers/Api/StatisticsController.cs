@@ -9,20 +9,20 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebApp.Controllers.Api
 {
     
-    [ApiController]
-    public class StatisticsController : ControllerBase
-    {
-        private readonly IStatisticService statisticService;
+    //[ApiController]
+    //public class StatisticsController : ControllerBase
+    //{
+    //    private readonly IStatisticService statisticService;
 
-        public StatisticsController(IStatisticService statisticService)
-        {
-            this.statisticService = statisticService;
-        }
+    //    public StatisticsController(IStatisticService statisticService)
+    //    {
+    //        this.statisticService = statisticService;
+    //    }
 
-        [HttpGet("api/[controller]")]
-        public IActionResult GetAll()
-        {
-            return Ok(statisticService.GetPatients());
-        }
-    }
+    //    [HttpGet("api/[controller]")]
+    //    public IActionResult GetAll()
+    //    {
+    //        return Ok(statisticService.GetPatients());
+    //    }
+    //}
 }

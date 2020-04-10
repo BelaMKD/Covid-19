@@ -17,9 +17,20 @@ namespace WebApp
         {
             this.virusService = virusService;
         }
-        public void OnGet()
+        [TempData]
+        public string Message { get; set; }
+        public IActionResult OnGet()
         {
             Viruses = virusService.GetViruses();
+            if(Viruses.Any(v => v.Name == "Covid-19"))
+            {
+                return Page();
+            }
+            else
+            {
+                TempData["Message"] = "For Statistics purposes, please create a Virus with name: Covid-19 ! Thank you.";
+                return Page();
+            }
         }
 
     }
