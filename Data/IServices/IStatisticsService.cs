@@ -13,5 +13,8 @@ namespace Data.IServices
         public IEnumerable<Diagnosis> Recovered();
         IEnumerable<Patient> GetPatiens();
         IEnumerable<PatientInfo> GetPatientsInfo();
+        Patient GetSinglePatient(int id);
+        Hospital GetSingleHospital(int hospitalId);
+        IEnumerable<Hospital> GetHospitalInfo();
     }
 }

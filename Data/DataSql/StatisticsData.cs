@@ -60,8 +60,28 @@ namespace Data.DataSql
                 .Select(p => new PatientInfo {Id = p.Id, PatinetName = p.Name, Gender = p.Gender.ToString(), Birthday = p.BirthDate
                 , Hospital = new Hospital {Id = p.Hospital.Id, Name = p.Hospital.Name, City = p.Hospital.City}, Diagnoses = p.Diagnosis })
                 .ToList();
-
-
+        }
+        public Patient GetSinglePatient(int id)
+        {
+            return dbContext.Patients
+                .Include(p => p.Hospital)
+                .Include(p => p.Diagnosis)
+                .SingleOrDefault(p => p.Id == id);
+                
+        }
+        public IEnumerable<Hospital> GetHospitalInfo()
+        {
+            return dbContext.Hospitals
+                .Include(h => h.Patients)
+                .ThenInclude(p => p.Diagnosis)
+                .ToList();
+        }
+        public Hospital GetSingleHospital(int hospitalId)
+        {
+            return dbContext.Hospitals
+                .Include(h => h.Patients)
+                .ThenInclude(p => p.Diagnosis)
+                .SingleOrDefault(h => h.Id == hospitalId);
         }
 
     }
